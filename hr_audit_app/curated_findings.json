@@ -1,0 +1,66 @@
+{
+  "AL101": {
+    "en_findings": [
+      "The company's internal labor regulations, specifically Article 20 on entry and exit procedures, require employees to obtain an exit pass signed by both the manager and the Korean department head to leave the premises. This imposes unreasonable restrictions on workers' freedom of movement within the facility, which contradicts the Responsible Business Alliance (RBA) Code of Conduct, Version 8.0, Section AL101, regarding the prohibition of forced labor. Such requirements may effectively limit voluntary movement during working hours or breaks, potentially creating coercive working conditions."
+    ],
+    "en_refs": [
+      "RBA Code of Conduct, Version 8.0, Section AL101: Prohibition of Forced Labor"
+    ],
+    "vi_findings": [
+      "Quy chế nội bộ về lao động, cụ thể Điều 20 quy định về việc ra vào công ty, yêu cầu người lao động phải có giấy ra cổng được ký đầy đủ bởi quản lý và trưởng bộ phận người Hàn mới được phép rời khỏi khu vực làm việc. Yêu cầu này tạo ra những hạn chế không hợp lý đối với quyền tự do di chuyển của người lao động trong phạm vi nhà máy, vi phạm Nguyên tắc AL1 của Bộ Quy tắc Ứng xử RBA 8.0 về cấm lao động cưỡng bức. Những quy định như vậy có thể làm giảm sự tự nguyện di chuyển trong giờ làm việc hoặc giờ nghỉ, dẫn đến nguy cơ hình thành môi trường làm việc mang tính ép buộc."
+    ],
+    "vi_refs": [
+      "Bộ Quy tắc Ứng xử RBA phiên bản 8.0, Mục AL101: Cấm lao động cưỡng bức"
+    ],
+    "raw": "AUDIT FINDINGS (ENGLISH)\n1. The company's internal labor regulations, specifically Article 20 on entry and exit procedures, require employees to obtain an exit pass signed by both the manager and the Korean department head to leave the premises. This imposes unreasonable restrictions on workers' freedom of movement within the facility, which contradicts the Responsible Business Alliance (RBA) Code of Conduct, Version 8.0, Section AL101, regarding the prohibition of forced labor. Such requirements may effectively limit voluntary movement during working hours or breaks, potentially creating coercive working conditions.\nLegal references:\n1. RBA Code of Conduct, Version 8.0, Section AL101: Prohibition of Forced Labor\n\nNỘI DUNG ĐÁNH GIÁ (TIẾNG VIỆT)\n1. Quy chế nội bộ về lao động, cụ thể Điều 20 quy định về việc ra vào công ty, yêu cầu người lao động phải có giấy ra cổng được ký đầy đủ bởi quản lý và trưởng bộ phận người Hàn mới được phép rời khỏi khu vực làm việc. Yêu cầu này tạo ra những hạn chế không hợp lý đối với quyền tự do di chuyển của người lao động trong phạm vi nhà máy, vi phạm Nguyên tắc AL1 của Bộ Quy tắc Ứng xử RBA 8.0 về cấm lao động cưỡng bức. Những quy định như vậy có thể làm giảm sự tự nguyện di chuyển trong giờ làm việc hoặc giờ nghỉ, dẫn đến nguy cơ hình thành môi trường làm việc mang tính ép buộc.\nCăn cứ pháp lý:\n1. Bộ Quy tắc Ứng xử RBA phiên bản 8.0, Mục AL101: Cấm lao động cưỡng bức",
+    "rating": "Minor"
+  },
+  "DE601": {
+    "en_findings": [
+      "The facility failed to submit the Personal Data Processing Impact Assessment report to the Ministry of Public Security as required by applicable regulations, constituting an unauthorized handling of personal information and non-conformance with data protection obligations under the RBA Code of Conduct, Section 8.0 (Privacy).",
+      "This omission increases the risk of unauthorized disclosure or misuse of workers’ personal data, particularly sensitive information collected during employment processes, thereby violating the principle of accountability and transparency in personal data protection."
+    ],
+    "en_refs": [
+      "Decree No. 356/2025/NĐ-CP, Article 19"
+    ],
+    "vi_findings": [
+      "Cơ sở chưa thực hiện việc nộp Báo cáo Đánh giá tác động việc xử lý dữ liệu cá nhân lên Bộ Công an theo đúng quy định pháp luật, vi phạm nghĩa vụ bảo vệ thông tin cá nhân và không tuân thủ yêu cầu tại Bộ Quy tắc ứng xử RBA, Mục 8.0 (Quyền riêng tư).",
+      "Việc thiếu sót này làm gia tăng nguy cơ tiết lộ hoặc lạm dụng thông tin cá nhân của người lao động, đặc biệt là các dữ liệu nhạy cảm thu thập trong quá trình tuyển dụng và làm việc, vi phạm nguyên tắc minh bạch và trách nhiệm trong quản lý dữ liệu cá nhân."
+    ],
+    "vi_refs": [
+      "Nghị định số 356/2025/NĐ-CP, Điều 19"
+    ],
+    "raw": "AUDIT FINDINGS (ENGLISH)\n1. The facility failed to submit the Personal Data Processing Impact Assessment report to the Ministry of Public Security as required by applicable regulations, constituting an unauthorized handling of personal information and non-conformance with data protection obligations under the RBA Code of Conduct, Section 8.0 (Privacy).\n2. This omission increases the risk of unauthorized disclosure or misuse of workers’ personal data, particularly sensitive information collected during employment processes, thereby violating the principle of accountability and transparency in personal data protection.\nLegal references:\n1. Decree No. 356/2025/NĐ-CP, Article 19\n\nNỘI DUNG ĐÁNH GIÁ (TIẾNG VIỆT)\n1. Cơ sở chưa thực hiện việc nộp Báo cáo Đánh giá tác động việc xử lý dữ liệu cá nhân lên Bộ Công an theo đúng quy định pháp luật, vi phạm nghĩa vụ bảo vệ thông tin cá nhân và không tuân thủ yêu cầu tại Bộ Quy tắc ứng xử RBA, Mục 8.0 (Quyền riêng tư).\n2. Việc thiếu sót này làm gia tăng nguy cơ tiết lộ hoặc lạm dụng thông tin cá nhân của người lao động, đặc biệt là các dữ liệu nhạy cảm thu thập trong quá trình tuyển dụng và làm việc, vi phạm nguyên tắc minh bạch và trách nhiệm trong quản lý dữ liệu cá nhân.\nCăn cứ pháp lý:\n1. Nghị định số 356/2025/NĐ-CP, Điều 19",
+    "rating": "Major"
+  },
+  "DM101": {
+    "en_findings": [
+      "The company has not established an adequate and effective quarterly process to identify, assess, and document compliance with applicable Vietnamese labor laws and customer requirements. Specifically, there is no evidence of regular legal updates, compliance evaluations, or risk assessments being conducted and recorded."
+    ],
+    "en_refs": [],
+    "vi_findings": [
+      "Công ty chưa thiết lập quy trình định kỳ hàng quý nhằm xác định, đánh giá và ghi nhận việc tuân thủ pháp luật lao động Việt Nam và các yêu cầu của khách hàng. Cụ thể, không có bằng chứng về việc cập nhật pháp luật, đánh giá tuân thủ hoặc ghi nhận kết quả đánh giá rủi ro."
+    ],
+    "vi_refs": [],
+    "raw": "AUDIT FINDINGS (ENGLISH)\n1. The company has not established an adequate and effective quarterly process to identify, assess, and document compliance with applicable Vietnamese labor laws and customer requirements. Specifically, there is no evidence of regular legal updates, compliance evaluations, or risk assessments being conducted and recorded.\n\nLegal references:\n\nNỘI DUNG ĐÁNH GIÁ (TIẾNG VIỆT)\n1. Công ty chưa thiết lập quy trình định kỳ hàng quý nhằm xác định, đánh giá và ghi nhận việc tuân thủ pháp luật lao động Việt Nam và các yêu cầu của khách hàng. Cụ thể, không có bằng chứng về việc cập nhật pháp luật, đánh giá tuân thủ hoặc ghi nhận kết quả đánh giá rủi ro.\n\nCăn cứ pháp lý:",
+    "rating": "Major"
+  },
+  "ES403": {
+    "en_findings": [
+      "The company failed to establish an adequate and effective process to ensure that next-tier major suppliers implement the RBA Code of Conduct, as required under ES403. Specifically, the contracted security service provider, Cong Ty Bao Ve Dang Quang, was found to be in violation of several RBA provisions, including the practice of signing fixed-term labor contracts annually instead of offering indefinite-term contracts where applicable, and failing to guarantee legally mandated annual paid leave entitlements for workers."
+    ],
+    "en_refs": [
+      "Labor Code No. 45/2019/QH14, Articles 20 (regarding labor contract types, renewal limitations, and conditions for indefinite-term contracts)",
+      "Labor Code No. 45/2019/QH14, Article 113 (annual paid leave entitlements)"
+    ],
+    "vi_findings": [
+      "Công ty chưa thiết lập quy trình đầy đủ và hiệu quả để đảm bảo các nhà cung cấp chính cấp hai thực hiện đúng Bộ Quy tắc ứng xử RBA như yêu cầu tại mục ES403. Cụ thể, đơn vị cung cấp dịch vụ bảo vệ được thuê ngoài – Công ty Bảo vệ Đăng Quang – đã vi phạm một số điều khoản của RBA, bao gồm việc ký hợp đồng lao động định kỳ hàng năm thay vì loại hợp đồng không xác định thời hạn khi đủ điều kiện, và không đảm bảo quyền nghỉ phép hằng năm có lương theo quy định pháp luật cho người lao động."
+    ],
+    "vi_refs": [
+      "Bộ luật Lao động số 45/2019/QH14, các Điều 20 (quy định về loại hợp đồng lao động, giới hạn gia hạn và điều kiện chuyển sang hợp đồng không xác định thời hạn)",
+      "Bộ luật Lao động số 45/2019/QH14, Điều 113 (quyền nghỉ phép hằng năm có lương)"
+    ],
+    "raw": "AUDIT FINDINGS (ENGLISH)\n1. The company failed to establish an adequate and effective process to ensure that next-tier major suppliers implement the RBA Code of Conduct, as required under ES403. Specifically, the contracted security service provider, Cong Ty Bao Ve Dang Quang, was found to be in violation of several RBA provisions, including the practice of signing fixed-term labor contracts annually instead of offering indefinite-term contracts where applicable, and failing to guarantee legally mandated annual paid leave entitlements for workers.\n\nLegal references:\n1. Labor Code No. 45/2019/QH14, Articles 20 (regarding labor contract types, renewal limitations, and conditions for indefinite-term contracts)\n2. Labor Code No. 45/2019/QH14, Article 113 (annual paid leave entitlements)\n\nNỘI DUNG ĐÁNH GIÁ (TIẾNG VIỆT)\n1. Công ty chưa thiết lập quy trình đầy đủ và hiệu quả để đảm bảo các nhà cung cấp chính cấp hai thực hiện đúng Bộ Quy tắc ứng xử RBA như yêu cầu tại mục ES403. Cụ thể, đơn vị cung cấp dịch vụ bảo vệ được thuê ngoài – Công ty Bảo vệ Đăng Quang – đã vi phạm một số điều khoản của RBA, bao gồm việc ký hợp đồng lao động định kỳ hàng năm thay vì loại hợp đồng không xác định thời hạn khi đủ điều kiện, và không đảm bảo quyền nghỉ phép hằng năm có lương theo quy định pháp luật cho người lao động.\n\nCăn cứ pháp lý:\n1. Bộ luật Lao động số 45/2019/QH14, các Điều 20 (quy định về loại hợp đồng lao động, giới hạn gia hạn và điều kiện chuyển sang hợp đồng không xác định thời hạn)\n2. Bộ luật Lao động số 45/2019/QH14, Điều 113 (quyền nghỉ phép hằng năm có lương)\n",
+    "rating": "Minor"
+  }
+}

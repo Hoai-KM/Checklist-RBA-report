@@ -42,6 +42,14 @@
 - `archive/` — script trích xuất/đối chiếu KB (extract*, grep*, verify*), file .txt trung gian, file rỗng (chỉ mang tính tham khảo, không cần chạy app)
 - `_q2.py` — file test tạm (`print('q2-ok')`)
 
+## Sửa lỗi ES403 bị lặp (25/10/2026)
+- **Nguyên nhân:** Kết quả `enforce_language_purity()` và `build_content()` chỉ loại trùng lặp cho `refs` (trích dẫn pháp lý) nhưng KHÔNG loại trùng lặp cho `findings` (nội dung vi phạm). Khi `mirror_each_finding()` dịch bù hoặc `supplement_pools()`/`supplement_missing_findings()` chèn lại nội dung bị rơi, cùng một nội dung ES403 có thể xuất hiện nhiều lần trong ô cột L.
+- **Sửa tại `hr_audit_app/rewrite.py`:**
+  1. Dòng 1164: `enforce_language_purity()` hiện trả về `dedupe_items(en_f), dedupe_items(vi_f), dedupe_items(en_r), dedupe_items(vi_r)` — loại trùng lặp cả findings lẫn refs.
+  2. Dòng 1667-1669: `build_content()` thêm `dedupe_items()` cho `en_f` và `vi_f` sau khi `mirror_each_finding()` dịch bù ngôn ngữ.
+  3. Dòng 1466-1468: `supplement_missing_findings()` thêm `dedupe_items()` cho `en_f2` và `vi_f2` sau khi `supplement_pools()` chèn lại nội dung bị rơi.
+- **Kết quả:** Tất cả 81 test hiện tại vẫn pass (134 subtests).
+
 ## Cách chạy
 ```bash
 pip install -r requirements.txt

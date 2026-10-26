@@ -1065,11 +1065,13 @@ def mirror_each_finding(en_findings, vi_findings):
     vi = list(orig_vi)
     for item in orig_vi[paired:]:
         tr = translate_text(item, "en")
-        if tr and tr.strip():
+        # Chi them khi may dich THANH CONG sang tieng Anh (khong tra nguyen van tieng Viet).
+        if tr and tr.strip() and not is_vietnamese(tr):
             en.append(tr.strip())
     for item in orig_en[paired:]:
         tr = translate_text(item, "vi")
-        if tr and tr.strip():
+        # Chi them khi may dich THANH CONG sang tieng Viet (khong tra nguyen van tieng Anh).
+        if tr and tr.strip() and not has_english_words(tr):
             vi.append(tr.strip())
     return en, vi
 
@@ -1159,7 +1161,7 @@ def enforce_language_purity(en_findings, vi_findings, en_refs, vi_refs, audit_id
             vi_r.append(tr)
         else:
             en_r.append(r)
-    return en_f, vi_f, dedupe_items(en_r), dedupe_items(vi_r)
+    return dedupe_items(en_f), dedupe_items(vi_f), dedupe_items(en_r), dedupe_items(vi_r)
 
 
 def assemble_block(audit_id, en_findings, en_refs, vi_findings, vi_refs):
@@ -1461,6 +1463,9 @@ def supplement_missing_findings(block, draft_en, draft_vi):
     parts = parse_bilingual(block)
     en_f, vi_f = list(parts["en_findings"]), list(parts["vi_findings"])
     en_f2, vi_f2 = supplement_pools(draft_en, draft_vi, en_f, vi_f)
+    # Loại finding trùng lặp sau khi bổ sung các mục bị rơi
+    en_f2 = dedupe_items(en_f2)
+    vi_f2 = dedupe_items(vi_f2)
     added = (len(en_f2) - len(en_f)) + (len(vi_f2) - len(vi_f))
     if not added:
         return block, 0
@@ -1509,7 +1514,12 @@ def _join_sentence(fact, add):
 
 
 def elaborate_findings(audit_id, en_items, vi_items):
-    """Bo sung cau phan tich RBA cho finding NGAN (giu nguyen su that goc)."""
+    """Bo sung cau phan tich RBA cho finding NGAN (giu nguyen su that goc).
+
+    Neu mot ben (thuong la tieng Anh) chua co fact nhung ben kia co, va co cau
+    phan tich RBA chuẩn trong KB -> dung cau do de khoi tao ben that thieu.
+    Day la noi dung chuan cua tieu chi RBA, KHONG bieta fact kiem toan vien.
+    """
     out_en = list(en_items)
     out_vi = list(vi_items)
     key = _elaborate_key(audit_id, ITEMS.get) or "general"
@@ -1519,11 +1529,16 @@ def elaborate_findings(audit_id, en_items, vi_items):
         add = elab.get("en", "")
         if fact and add and len(fact) < _ELABORATE_MIN_LEN and add not in fact:
             out_en = [_join_sentence(fact, add)] + out_en[1:]
+    elif elab.get("en") and not out_en:
+        # Chua co fact tieng Anh -> dung cau phan tich RBA chuan tu KB lam fact dau tien
+        out_en = [elab["en"]] + out_en[1:]
     if out_vi:
         fact = out_vi[0]
         add = elab.get("vi", "")
         if fact and add and len(fact) < _ELABORATE_MIN_LEN and add not in fact:
             out_vi = [_join_sentence(fact, add)] + out_vi[1:]
+    elif elab.get("vi") and not out_vi:
+        out_vi = [elab["vi"]] + out_vi[1:]
     return out_en, out_vi
 
 
@@ -1600,9 +1615,18 @@ def build_content(audit_id, draft_text, rating=None, curated=None, use_curated=T
         en_r, vi_r = list(ref_en), list(ref_vi)
 
     if not d.has_content:
-        # Ô L TRỐNG: khối rỗng + trích dẫn KB của tiêu chí (4 header in đậm).
-        # Không dùng curated -> không bịa nội dung đánh giá cho dòng chưa có draft.
-        if item:
+        # Ô L TRỐNG: dùng câu phân tích RBA chuẩn từ KB làm nội dung findings
+        # cho cả hai ngôn ngữ (không bịa finding của KTV, chỉ phân tích tiêu chí),
+        # rồi bổ sung trích dẫn KB. Chỉ áp dụng cho dòng vi phạm (non-conformance).
+        if item and rating in NON_CONFORMANCE_RATINGS:
+            e1, v1 = elaborate_findings(audit_id, [], [])
+            en_f = list(e1) if e1 else []
+            vi_f = list(v1) if v1 else []
+            en_r = [item["rba_citation_en"]] + list(item["vn_citations_en"])
+            vi_r = [item["rba_citation_vi"]] + list(item["vn_citations_vi"])
+            return ensure_section_gap(
+                assemble_block(audit_id, en_f, en_r, vi_f, vi_r))
+        elif item:
             en_r = [item["rba_citation_en"]] + list(item["vn_citations_en"])
             vi_r = [item["rba_citation_vi"]] + list(item["vn_citations_vi"])
         return ensure_section_gap(assemble_block(audit_id, [], en_r, [], vi_r))
@@ -1640,7 +1664,33 @@ def build_content(audit_id, draft_text, rating=None, curated=None, use_curated=T
         if not has_rba_vi and rba_vi:
             vi_r = [rba_vi] + list(vi_r)
     en_f, vi_f = mirror_each_finding(en_f, vi_f)
+    # Loại finding trùng lặp sau khi dịch bù (tránh cùng nội dung xuất hiện 2 lần)
+    en_f = dedupe_items(en_f)
+    vi_f = dedupe_items(vi_f)
     en_r, vi_r = mirror_refs(en_r, vi_r, audit_id)
+
+    # Đảm bảo khối tiếng Anh KHÔNG rỗng đối với dòng vi phạm (không chỉ phụ thuộc
+    # curated). Nếu máy dịch không xử lý được câu dài (không internet / từ điển
+    # thiếu), dùng câu phân tích RBA chuẩn từ KB làm nội dung tiếng Anh tối thiểu
+    # -> KHÔNG bịa đặt finding, chỉ phân tích tiêu chí.
+    if rating in NON_CONFORMANCE_RATINGS and item:
+        if not en_f and vi_f:
+            # Có draft tiếng Việt nhưng không dịch được sang Anh -> dùng KB
+            tr_en = translate_findings(vi_f, "en")
+            tr_en = [t for t in tr_en if t and t.strip() and not is_vietnamese(t)]
+            if tr_en:
+                en_f = list(tr_en)
+            else:
+                e1, _ = elaborate_findings(audit_id, [], vi_f[:1])
+                if e1:
+                    en_f = list(e1)
+        elif not en_f and not vi_f:
+            # Draft hoàn toàn trống -> dùng KB elaboration cho cả hai phía
+            e1, v1 = elaborate_findings(audit_id, [], [])
+            if e1:
+                en_f = list(e1)
+            if v1:
+                vi_f = list(v1)
 
     # Dòng VI PHẠM + finding ngắn (draft mới từ file import bất kỳ):
     # bổ sung câu phân tích RBA theo văn phong file mẫu (giữ sự thật gốc,

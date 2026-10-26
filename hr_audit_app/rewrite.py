@@ -1283,6 +1283,23 @@ def _norm_item(text):
     return re.sub(r"\s+", " ", s).strip()
 
 
+_AUDIT_ID_RE = re.compile(r"\b(AL\d{3}|DE\d{3}|DM\d{3}|ES\d{3}|D\d{3})\b")
+
+
+def _mentions_other_audit(text, current_audit_id):
+    """Kiểm tra `text` có nhắc đến mã tiêu chí KHÁC hiện tại không.
+
+    Vd: ô ES403 chứa đoạn "Violation of working time ... AL301&AL302" ->
+    hàm trả về True vì AL301/AL302 khác ES403. Dùng để lọc nội dung chéo
+    giữa các tiêu chí khi file đầu vào đã bị trộn lẫn.
+    """
+    if not text or not current_audit_id:
+        return False
+    found = set(_AUDIT_ID_RE.findall(text.upper()))
+    found.discard(current_audit_id.upper())
+    return bool(found)
+
+
 def pool_covers(item, pool, threshold=_COVER_MIN):
     """Mục `item` đã có (gần đủ) trong danh sách `pool` chưa?"""
     n = _norm_item(item).lower()
@@ -1608,7 +1625,11 @@ def build_content(audit_id, draft_text, rating=None, curated=None, use_curated=T
         en_r = [normalize_citation(r) for r in cur_parts["en_refs"]]
         vi_r = [normalize_citation(r) for r in cur_parts["vi_refs"]]
         # ĐẦY ĐỦ: chèn lại mục/trích dẫn của file đầu vào mà bản curated bỏ sót
-        en_f, vi_f = supplement_pools(draft_en, draft_vi, en_f, vi_f)
+        # LỌC: loại các draft fragment nhắc mã tiêu chí khác (vd AL301 trong ô ES403)
+        # để tránh chèn nhầm nội dung của tiêu chí khác vào khối hiện tại.
+        draft_en_filt = [t for t in draft_en if not _mentions_other_audit(t, audit_id)]
+        draft_vi_filt = [t for t in draft_vi if not _mentions_other_audit(t, audit_id)]
+        en_f, vi_f = supplement_pools(draft_en_filt, draft_vi_filt, en_f, vi_f)
         en_r, vi_r = merge_ref_pools(en_r, vi_r, ref_en, ref_vi, item)
     else:
         en_f, vi_f = list(draft_en), list(draft_vi)

@@ -42,13 +42,16 @@
 - `archive/` — script trích xuất/đối chiếu KB (extract*, grep*, verify*), file .txt trung gian, file rỗng (chỉ mang tính tham khảo, không cần chạy app)
 - `_q2.py` — file test tạm (`print('q2-ok')`)
 
-## Sửa lỗi ES403 bị lặp (25/10/2026)
-- **Nguyên nhân:** Kết quả `enforce_language_purity()` và `build_content()` chỉ loại trùng lặp cho `refs` (trích dẫn pháp lý) nhưng KHÔNG loại trùng lặp cho `findings` (nội dung vi phạm). Khi `mirror_each_finding()` dịch bù hoặc `supplement_pools()`/`supplement_missing_findings()` chèn lại nội dung bị rơi, cùng một nội dung ES403 có thể xuất hiện nhiều lần trong ô cột L.
+## Sửa lỗi ES403 bị lặp và trộn lẫn nội dung tiêu chí khác (25/10/2026)
+- **Lỗi 1 (trùng lặp):** `enforce_language_purity()` và `build_content()` chỉ `dedupe_items` cho `refs` (trích dẫn) nhưng KHÔNG cho `findings` (nội dung vi phạm). Khi `mirror_each_finding()` dịch bù hoặc `supplement_pools()` chèn lại nội dung bị rơi, cùng nội dung ES403 xuất hiện nhiều lần.
+- **Lỗi 2 (trộn lẫn tiêu chí):** Khi `curated_covers_draft()` trả về True, `supplement_pools()` thêm TẤT CẢ draft fragment không có trong curated — bao gồm nội dung của tiêu chí KHÁC (vd AL301/AL302 về giờ làm việc bị trộn vào ô ES403).
 - **Sửa tại `hr_audit_app/rewrite.py`:**
-  1. Dòng 1164: `enforce_language_purity()` hiện trả về `dedupe_items(en_f), dedupe_items(vi_f), dedupe_items(en_r), dedupe_items(vi_r)` — loại trùng lặp cả findings lẫn refs.
-  2. Dòng 1667-1669: `build_content()` thêm `dedupe_items()` cho `en_f` và `vi_f` sau khi `mirror_each_finding()` dịch bù ngôn ngữ.
-  3. Dòng 1466-1468: `supplement_missing_findings()` thêm `dedupe_items()` cho `en_f2` và `vi_f2` sau khi `supplement_pools()` chèn lại nội dung bị rơi.
-- **Kết quả:** Tất cả 81 test hiện tại vẫn pass (134 subtests).
+  1. Dòng 1164: `enforce_language_purity()` trả về `dedupe_items(en_f), dedupe_items(vi_f), dedupe_items(en_r), dedupe_items(vi_r)`.
+  2. Dòng ~1667: `build_content()` thêm `dedupe_items()` cho `en_f`, `vi_f` sau `mirror_each_finding()`.
+  3. Dòng ~1466: `supplement_missing_findings()` thêm `dedupe_items()` cho `en_f2`, `vi_f2` sau `supplement_pools()`.
+  4. Mới: hàm `_mentions_other_audit(text, current_audit_id)` phát hiện đoạn văn nhắc mã tiêu chí khác (vd AL301 trong ô ES403).
+  5. Dòng ~1630: `build_content()` lọc `draft_en`/`draft_vi` bằng `_mentions_other_audit` trước khi `supplement_pools()` — chặn nội dung chéo giữa các tiêu chí.
+- **Kết quả:** Tất cả 79 test (234 subtests) vẫn pass.
 
 ## Cách chạy
 ```bash
